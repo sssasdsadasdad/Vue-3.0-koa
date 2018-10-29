@@ -22,6 +22,7 @@
 
 <script>
 	import axios from 'axios';
+	import {reg} from '../../api/login.js'
 	export default {
 		data(){
 			return {
@@ -32,7 +33,8 @@
 		},
 		methods: {
 			register(){
-				axios.post('/reg', {name: this.name, password: this.password, confirm: this.confirm}).then(res => {
+				reg(this.name,this.password, this.confirm).then(res => {
+					
 					if(res.data.code == 2000){
 						this.$message({
 				            showClose: true,
@@ -51,7 +53,10 @@
 				            type: 'error'
 				        });
 					}
+				
 				})
+				//axios.post('/reg', {name: this.name, password: this.password, confirm: this.confirm}).then(res => {})
+			
 			},
 			login(){
 				this.$router.push({

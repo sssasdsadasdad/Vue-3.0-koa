@@ -1,11 +1,20 @@
 <template>
 	<div>
-		首页
+		<div class="i">
+			首页
+			<span>span</span>
+		</div>
 	</div>
 </template>
 
 <script>
 </script>
 
-<style>
+<style scoped="scoped" lang="less">
+	.i{
+		color: red;
+		span{
+			color: black;
+		}
+	}
 </style>
