@@ -40,12 +40,29 @@ router.post('/reg', async(ctx, next) => {
 		}
 	})
 	
-	}).post('/login', (ctx, next) => {
-		var name = ctx.request.body;
-		ctx.body = {
-		  	code: 2000,
-		  	msg:'登录成功'
-		}
+	}).post('/login', async(ctx, next) => {
+		let {name, password} = ctx.request.body;
+		await api.login(name).then(res => {
+			if(res.length === 0){
+				ctx.body = {
+				  	code: 2001,
+				  	msg:'没有此用户',
+				}
+				return 
+			}
+			if(res[0]['password'] === sha1(password)){
+				ctx.body = {
+				  	code: 2000,
+				  	msg:'登录成功',
+				}
+			} else {
+				ctx.body = {
+				  	code: 2001,
+				  	msg:'密码不正确',
+				}
+			}
+			
+		})
 	})
 
 module.exports = router;
