@@ -21,7 +21,6 @@
 </template>
 
 <script>
-	import axios from 'axios';
 	import {reg} from '../../api/login.js'
 	export default {
 		data(){
@@ -33,9 +32,24 @@
 		},
 		methods: {
 			register(){
+				if(!this.name || !this.password || !this.confirm){
+					this.$message({
+			            showClose: true,
+			            message:  '缺少必填项',
+			            type: 'error'
+			        });
+			        return false;
+				}
+				if(this.password != this.confirm){
+					this.$message({
+			            showClose: true,
+			            message:  '两次密码不一致',
+			            type: 'error'
+			        });
+			        return false;
+				}
 				reg(this.name,this.password, this.confirm).then(res => {
 					
-					if(res.data.code == 2000){
 						this.$message({
 				            showClose: true,
 				            message: '恭喜你，注册成功',
@@ -46,16 +60,17 @@
 								path: '/'
 							})
 				        }, 1500)	
-					} else {
-					    this.$message({
-				            showClose: true,
-				            message: '注册失败',
-				            type: 'error'
-				        });
-					}
+					
+					if(res.code == 2000){} else {}
 				
+				}).catch(e => {
+				    this.$message({
+			            showClose: true,
+			            message: e.msg || '注册失败',
+			            type: 'error'
+			        });
+					
 				})
-				//axios.post('/reg', {name: this.name, password: this.password, confirm: this.confirm}).then(res => {})
 			
 			},
 			login(){

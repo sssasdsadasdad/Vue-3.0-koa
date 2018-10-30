@@ -11,9 +11,15 @@ module.exports = function (sql, v){
 	return new Promise((resolve, reject) => {
 		POOL.getConnection((err, connection) => {
 			if(err){
-				resolve(err)
+				reject(err)
 			} else {
-				resolve(connection.query(sql, v))
+				connection.query(sql, (err, row) => {
+					if(err){
+						reject(err)
+					} else {
+						resolve(row);
+					}
+				})
 			}
 		})
 	})

@@ -1,10 +1,14 @@
 import http from './http.js';
- export function reg(name,password,confirm){
+ export const reg = (name,password,confirm) => {
  	
 		return new Promise((resolve, reject) => {
 			
 			http.post('/reg', {name: name, password: password, confirm: confirm}).then(res => {
-				resolve(res)
+				if(res.data.code == 2000){
+					resolve(res.data)
+				} else {
+					reject(res.data)
+				}
 			})
 			
 		})
