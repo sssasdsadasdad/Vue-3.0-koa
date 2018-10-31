@@ -1,20 +1,22 @@
 <template>
 	<div>
-		<div class="i">
-			首页
-			<span>span</span>
-		</div>
+        <router-view></router-view>
+		<footers></footers>
 	</div>
 </template>
 
 <script>
+	import footers from '@/components/footer.vue';
+	
+	export default {
+		name: 'index',
+
+		components: {
+			footers,
+		},
+	}
 </script>
 
 <style scoped="scoped" lang="less">
-	.i{
-		color: red;
-		span{
-			color: black;
-		}
-	}
+
 </style>

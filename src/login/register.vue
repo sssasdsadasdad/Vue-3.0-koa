@@ -21,7 +21,7 @@
 </template>
 
 <script>
-	import {reg} from '../../api/login.js'
+	import {reg} from '@/api/login.js'
 	export default {
 		data(){
 			return {

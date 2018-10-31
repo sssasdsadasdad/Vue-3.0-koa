@@ -3,6 +3,7 @@ import router from 'vue-router';
 import login from './login/index.vue';
 import register from './login/register.vue';
 import index from './index/index.vue';
+import home from './home/home.vue';
 vue.use(router);
 export default new router({
   routes: [
@@ -19,7 +20,15 @@ export default new router({
      {
       path: '/index',
       name: 'index',
-      component: index
+      component: index,
+      children: [
+      	 {
+			      path: '/',
+			      name: 'home',
+			      component: home
+			    },
+      ]
     },
+   
   ]
 })
