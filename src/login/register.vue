@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="login">
 	   <div style="margin-bottom: 20px;">
 	    	<el-input placeholder="请输入账号" v-model="name">
 			    <template slot="prepend">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</template>
@@ -15,8 +15,11 @@
 		       <template slot="prepend">确认密码</template>
 	         </el-input>
 	   </div>
-		  <el-button @click="register">确定注册</el-button>
-		  <el-button @click="login">返回登录</el-button>
+	   
+	   <div class="btn">
+		   	<el-button @click="register">确定注册</el-button>
+		   	<el-button @click="login">返回登录</el-button>
+	   </div>
 		</div>
 </template>
 
@@ -57,11 +60,11 @@
 				        });
 				        setTimeout(() => {
 				        	this.$router.push({
-								path: '/'
-							})
+										path: '/'
+									})
 				        }, 1500)	
 					
-					if(res.code == 2000){} else {}
+					
 				
 				}).catch(e => {
 				    this.$message({
@@ -82,5 +85,7 @@
 	}
 </script>
 
-<style>
+<style scoped lang="less">
+	@import '../assets/less/login.less';
+	
 </style>

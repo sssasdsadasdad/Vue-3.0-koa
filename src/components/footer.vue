@@ -1,11 +1,14 @@
 <template>
+	<keep-alive>
 	<div class="footer_box">
 		<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" >
-		  <el-menu-item index="1">首页</el-menu-item>
-		  <el-menu-item index="2">消息</el-menu-item>
-		  <el-menu-item @click="go" index="3">我的</el-menu-item>
+		  <el-menu-item @click="go('/index/')" index="1">首页</el-menu-item>
+		  <el-menu-item @click="go('/chat/dialog')" index="2">消息</el-menu-item>
+		  <el-menu-item @click="go('/mine')" index="3">我的</el-menu-item>
 		</el-menu>
 	</div>
+	</keep-alive>
+
 </template>
 
 <script>
@@ -16,10 +19,9 @@
       };
     },
     methods: {
-
-      go(){
+      go(path){
       	this.$router.push({
-      		path: '/index'
+      		path: path || '/'
       	})
       }
     }

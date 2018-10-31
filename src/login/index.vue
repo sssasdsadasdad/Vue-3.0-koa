@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="login">
 	    <div style="margin-bottom: 20px;">
 	    	<el-input placeholder="请输入账号" v-model="userInfo.name">
 			    <template slot="prepend">账号</template>
@@ -10,8 +10,10 @@
 		       <template slot="prepend">密码</template>
 	         </el-input>
 	   </div>
-	  <el-button @click="confirm">登录</el-button>
-	  <el-button @click="register">注册</el-button>
+	   <div class="btn">
+	   		<el-button @click="confirm">登录</el-button>
+	   		<el-button @click="register">注册</el-button>
+	   </div>
 	  
 	</div>
 </template>
@@ -29,7 +31,7 @@
 		},
 		methods: {
 			register(){
-				this.$router.push({path: '/register'});
+				this.$router.push({path: '/login/register'});
 			},
 			confirm(){
 				if(!this.userInfo.name || !this.userInfo.password){
@@ -54,7 +56,7 @@
 				}).catch(e => {
 					this.$message({
 			            showClose: true,
-			            message:  e.msg || '登录失败',
+			            message:  e.msg || '登录失败,系统错误请联系管理员',
 			            type: 'error'
 			        });
 				})
@@ -62,3 +64,6 @@
 		}
 	}
 </script>
+<style scoped lang="less">
+	@import '../assets/less/login.less';
+</style>

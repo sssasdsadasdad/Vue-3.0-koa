@@ -1,7 +1,22 @@
 const koa = require('koa');
-var app = new koa;
+const app = new koa;
 const parser = require('koa-bodyparser')();
 const router = require('./router')
+//const io = require('socket.io')
+//var socket = io.listen(app)
+//socket.on('connection', res => {
+//	console.log(res)
+//})
+var io = require('socket.io').listen(app,{origins:'*'});
+//io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
+//io.set('origins', '*:*');
+io.sockets.on('connection', (socket) => {
+    console.log('链接成功');
+    socket.on('compile', () => {
+    socket.emit('login', 'ok');
+    });   
+});
+
 app.use(parser);
 router(app)
 
