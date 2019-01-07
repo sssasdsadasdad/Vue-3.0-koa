@@ -20,6 +20,8 @@ module.exports = function (sql, v){
 						resolve(row);
 					}
 				})
+				//
+				connection.release();
 			}
 		})
 	})

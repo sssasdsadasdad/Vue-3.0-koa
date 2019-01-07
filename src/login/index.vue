@@ -29,9 +29,23 @@
         		}
         	}
 		},
+sockets:{
+    connect(){
+    	this.$socket.emit('send_uid', 67)
+    },
+
+	  login(value) {
+	    console.log(value);
+	  }
+  },
+
+		created(){
+//			this.$socket.emit('contention', 23)
+		},
 		methods: {
 			register(){
-				this.$router.push({path: '/login/register'});
+//				this.$router.push({path: '/login/register'});
+				this.$socket.emit('event', 666)
 			},
 			confirm(){
 				if(!this.userInfo.name || !this.userInfo.password){

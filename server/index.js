@@ -2,20 +2,45 @@ const koa = require('koa');
 const app = new koa;
 const parser = require('koa-bodyparser')();
 const router = require('./router')
+const cors = require('koa2-cors')
+//websocket，消息 类， 
+const message = require('./message')
 //const io = require('socket.io')
 //var socket = io.listen(app)
 //socket.on('connection', res => {
 //	console.log(res)
 //})
-var io = require('socket.io').listen(app,{origins:'*'});
-//io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
-//io.set('origins', '*:*');
-io.sockets.on('connection', (socket) => {
-    console.log('链接成功');
-    socket.on('compile', () => {
-    socket.emit('login', 'ok');
-    });   
-});
+app.use(cors({
+    origin: function (ctx) {
+//      if (ctx.url === '/test') {
+//          return "*"; // 允许来自所有域名请求
+//      }
+        return 'http://localhost:8080';
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}))
+
+//
+//const io = require('socket.io')();
+//io.on('connection', client => {
+//	map[client.id] = 22
+//	client.on('event', (v) => {
+//		
+//		client.emit('login', map)
+//	})
+//});
+//io.on('disconnect', client => {
+//	console.log(client)
+//	delete map[client.id];
+//	console.log(map)
+//});
+//io.listen(3001);
+
+new message()
 
 app.use(parser);
 router(app)
