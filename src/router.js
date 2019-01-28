@@ -8,6 +8,7 @@ import mine from './index/mine.vue';
 import dialog from './chat/dialog.vue';
 vue.use(router);
 export default new router({
+	mode: 'hash',
   routes: [
     {
       path: '/',

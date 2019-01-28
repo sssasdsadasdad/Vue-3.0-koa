@@ -1,48 +1,49 @@
 const router = require('koa-router')();
-const api = require('../model/api');
+const {reg, uniqueName, login} = require('../model/login');
+const {hostImg} = require('../util');
 const sha1 = require('sha1');
 //const queryString = require('queryString');
-router.post('/reg', async(ctx, next) => {
+router.post('/api/reg', async(ctx, next) => {
 	let {password, confirm, name} = ctx.request.body;
 	if(!name){
-		ctx.body = {code: 2001, msg: '没有用户名!'}
-		return false;
+		return ctx.body = {code: 2001, msg: '没有用户名!'}
 	}
 	if(!password){
-		ctx.body = {code: 2001, msg: '没有密码!'}
-		return false;
+		return ctx.body = {code: 2001, msg: '没有密码!'}
 	}
 	if(password != confirm){
-		ctx.body = {code: 2001, msg: '两次密码不一致!'}
-		return false;
+		return ctx.body = {code: 2001, msg: '两次密码不一致!'}
 	}
 	
-	await api.uniqueUserName(name).then(async r => {
-		if(r[0]['count(*)'] == 0){
-			await api.reg(name, sha1(password)).then(res => {
-				if(res){
-					ctx.body = {
-					  	code: 2000,
-					  	msg:'注册成功',
-					}
-				} else {
-					ctx.body = {
-					  	code: 2001,
-					  	msg:'注册失败',
-					}
-				}
-			})
-		} else {
-			ctx.body = {
+	await uniqueName(name).then(res => {
+		if(res[0]['COUNT(1)']){
+			return ctx.response.body = {
 			  	code: 2001,
 			  	msg:'用户名已被注册',
 			}
-		}
+		} 
 	})
+	
+		
+	
+		await reg(name, sha1(password), Date.now()).then(res => {
+			if(res){
+				return ctx.body = {
+				  	code: 2000,
+				  	msg:'注册成功',
+				}
+			} else {
+				return ctx.body = {
+				  	code: 2001,
+				  	msg:'注册失败',
+				}
+			}
+		})	
+	
 	
 	}).post('/login', async(ctx, next) => {
 		let {name, password} = ctx.request.body;
-		await api.login(name).then(res => {
+		await login(name).then(res => {
 			if(res.length === 0){
 				ctx.body = {
 				  	code: 2001,
@@ -63,6 +64,6 @@ router.post('/reg', async(ctx, next) => {
 			}
 			
 		})
-	})
+	}).post('/hostImg', hostImg)
 
 module.exports = router;

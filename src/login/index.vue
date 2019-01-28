@@ -44,8 +44,8 @@ sockets:{
 		},
 		methods: {
 			register(){
-//				this.$router.push({path: '/login/register'});
-				this.$socket.emit('event', 666)
+				this.$router.push({path: '/login/register'});
+//				this.$socket.emit('event', 666)
 			},
 			confirm(){
 				if(!this.userInfo.name || !this.userInfo.password){

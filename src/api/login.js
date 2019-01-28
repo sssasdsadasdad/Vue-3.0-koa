@@ -4,7 +4,7 @@ import http from './http.js';
  	
 		return new Promise((resolve, reject) => {
 			
-			http.post('/reg', {name, password, confirm}).then(res => {
+			http.post('reg', {name, password, confirm}).then(res => {
 				if(res.data.code == 2000){
 					resolve(res.data)
 				} else {

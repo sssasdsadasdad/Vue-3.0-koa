@@ -1,9 +1,8 @@
-module.export = {
+module.exports = {
 	dataBase: {
-		
 		host     : 'localhost',
 		user     : 'root',
-		password : '123456',
+		password : 'root',
 		database : 'test'
 
 	}

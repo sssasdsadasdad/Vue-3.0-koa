@@ -14,5 +14,7 @@ class Redis{
 	del(k){
 		this.redis.del(k)
 	}
+
 }
+
 module.exports = new Redis()

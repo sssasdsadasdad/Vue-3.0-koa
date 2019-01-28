@@ -1,28 +1,30 @@
-const mysql = require('mysql');
+const mysqls = require('mysql');
 
-const POOL = mysql.createPool({
-	host     : 'localhost',
-	user     : 'root',
-	password : '123456',
-	database : 'test'
-});
+const {dataBase} = require('../config.js')
 
-module.exports = function (sql, v){
-	return new Promise((resolve, reject) => {
-		POOL.getConnection((err, connection) => {
-			if(err){
-				reject(err)
-			} else {
-				connection.query(sql, (err, row) => {
-					if(err){
-						reject(err)
-					} else {
-						resolve(row);
-					}
-				})
-				//
-				connection.release();
-			}
+ class mysql {
+ 	constructor(){
+ 		this.pool = mysqls.createPool(dataBase);
+ 	}
+ 	query(sql){
+		return new Promise((resolve, reject) => {
+			this.pool.getConnection((err, connection) => {
+				if(err){
+					reject(err)
+				} else {
+					connection.query(sql, (err, row) => {
+						if(err){
+							reject(err)
+						} else {
+							resolve(row);
+						}
+					})
+					//
+					connection.release();
+				}
+			})
 		})
-	})
-}
+
+ 	}
+ }
+module.exports = new mysql;

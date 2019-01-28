@@ -1,8 +1,8 @@
-
 const io = require('socket.io')();
 const redis = require('../redis');
  class Message {
 	constructor(port = 3001){
+
 		this.client = io
 		this.client.listen(3001)
 		this.MessageList()
@@ -10,14 +10,14 @@ const redis = require('../redis');
 	//消息处理
 	MessageList(){
 		//websocket链接成功时
-		io.on('connection', client => {
+		this.client.on('connection', client => {
 			//client_id绑定uid
 			client.on('send_uid', v => {
 				//uid => client_id存储与redis
 				redis.set(v, client.id)
 				redis.set(client.id, v)
 				redis.get(v, function(err,r){
-					console.log('redis', r)
+//					console.log('redis', r)
 				})
 			})
 			//链接关闭
@@ -30,8 +30,6 @@ const redis = require('../redis');
 		});
 		
 	}
-	sendToUid(){
-		
-	}
+	sendToUid(){}
 }
 module.exports = Message
